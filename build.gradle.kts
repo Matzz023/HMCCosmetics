@@ -143,12 +143,17 @@ tasks {
         }
     }
 
+    jar {
+        enabled = false
+    }
+
     shadowJar {
         mergeServiceFiles()
 
         relocate("dev.triumphteam.gui", "com.hibiscusmc.hmccosmetics.shaded.gui")
         relocate("com.owen1212055.particlehelper", "com.hibiscusmc.hmccosmetics.shaded.particlehelper")
-        archiveFileName.set("HMCCosmeticsRemapped-${project.version}.jar")
+        archiveFileName.set("HMCCosmetics-${project.version}.jar")
+        archiveClassifier.set("")
 
         dependencies {
             exclude(dependency("org.yaml:snakeyaml"))
@@ -164,6 +169,10 @@ tasks {
     }
 
     build {
+        dependsOn(shadowJar)
+    }
+
+    assemble {
         dependsOn(shadowJar)
     }
 }
@@ -301,7 +310,3 @@ fun getGitCommitHash(): String {
     }
     return ""
 }
-
-tasks.jar { enabled = false }
-tasks.shadowJar { archiveClassifier.set("") }
-tasks.assemble { dependsOn(tasks.shadowJar) }
