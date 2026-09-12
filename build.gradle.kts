@@ -304,3 +304,4 @@ fun getGitCommitHash(): String {
 
 tasks.jar { enabled = false }
 tasks.shadowJar { archiveClassifier.set("") }
+tasks.assemble { dependsOn(tasks.shadowJar) }
