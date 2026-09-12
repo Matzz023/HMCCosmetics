@@ -301,3 +301,6 @@ fun getGitCommitHash(): String {
     }
     return ""
 }
+
+tasks.jar { enabled = false }
+tasks.shadowJar { archiveClassifier.set("") }
