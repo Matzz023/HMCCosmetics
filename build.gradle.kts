@@ -186,6 +186,18 @@ publishing {
     }
 }
 
+// The :common module publishes itself under the SAME coordinates as this root
+// project (see common/build.gradle.kts), which collides with the "shadow"
+// publication above when both are written to mavenLocal (JitPack's build repo).
+// We don't need common's own publication here, so disable it.
+project(":common") {
+    afterEvaluate {
+        tasks.matching { it.name.startsWith("publish") }.configureEach {
+            enabled = false
+        }
+    }
+}
+
 
 bukkit {
     load = BukkitPluginDescription.PluginLoadOrder.POSTWORLD
